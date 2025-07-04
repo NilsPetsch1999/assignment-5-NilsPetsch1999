@@ -23,6 +23,13 @@ spec:
                     values:
                       - nginx
               topologyKey: kubernetes.io/hostname
+      initContainers:
+        - name: init-cache
+          image: busybox
+          command: ["mkdir", "-p", "/var/cache/nginx/client_temp"]
+          volumeMounts:
+            - name: nginx-cache
+              mountPath: /var/cache/nginx
       containers:
         - name: nginx
           image: nginx:1.25
@@ -42,6 +49,6 @@ spec:
           volumeMounts:
             - name: nginx-cache
               mountPath: /var/cache/nginx
-      volumes:                     # <-- volumes must be inside the pod spec
+      volumes:
         - name: nginx-cache
           emptyDir: {}
