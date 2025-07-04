@@ -1,3 +1,4 @@
+namespace: dev
 resources:
   - ../../base
   - secret.enc.yaml
