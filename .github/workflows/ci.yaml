@@ -21,8 +21,12 @@ jobs:
       - name: Run kube-linter on base manifests
         run: kube-linter lint apps/base
 
+      - name: Install kustomize
+        run: |
+          curl -s -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.4.1/kustomize_v5.4.1_linux_amd64.tar.gz | tar -xz
+          sudo mv kustomize /usr/local/bin/
+
       - name: Validate Kustomize dev overlay
         run: |
-          sudo apt-get update && sudo apt-get install -y kustomize
           cd apps/overlays/dev
           kustomize build .
