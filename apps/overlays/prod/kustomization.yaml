@@ -1,3 +1,4 @@
+namespace: prod
 resources:
   - ../../base
   - secret.enc.yaml

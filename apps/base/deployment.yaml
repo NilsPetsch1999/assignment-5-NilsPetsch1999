@@ -2,9 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
-  namespace: dev
 spec:
-  replicas: 2
+  replicas: 2  # Default replica count, override in overlays
   selector:
     matchLabels:
       app: nginx
@@ -31,7 +30,7 @@ spec:
             - name: nginx-cache
               mountPath: /var/cache/nginx
             - name: nginx-run
-              mountPath: /var/run
+              mountPath: /var/run/nginx
       containers:
         - name: nginx
           image: nginx:1.25
@@ -51,7 +50,7 @@ spec:
             - name: nginx-cache
               mountPath: /var/cache/nginx
             - name: nginx-run
-              mountPath: /var/run
+              mountPath: /var/run/nginx
       volumes:
         - name: nginx-cache
           emptyDir: {}
