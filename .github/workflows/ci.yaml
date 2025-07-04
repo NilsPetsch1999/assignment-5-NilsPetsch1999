@@ -28,5 +28,4 @@ jobs:
 
       - name: Validate Kustomize dev overlay
         run: |
-          cd apps/overlays/dev
-          kustomize build .
+          kustomize build apps/overlays/dev
