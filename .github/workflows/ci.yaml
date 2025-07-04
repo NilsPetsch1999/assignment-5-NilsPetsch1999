@@ -1,0 +1,28 @@
+name: GitOps CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: Lint Kubernetes manifests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install kube-linter
+        run: |
+          curl -sSL https://github.com/stackrox/kube-linter/releases/download/v0.6.7/kube-linter-linux.tar.gz | tar -xz
+          sudo mv kube-linter /usr/local/bin/
+
+      - name: Run kube-linter on base manifests
+        run: kube-linter lint apps/base
+
+      - name: Validate Kustomize dev overlay
+        run: |
+          sudo apt-get update && sudo apt-get install -y kustomize
+          cd apps/overlays/dev
+          kustomize build .
