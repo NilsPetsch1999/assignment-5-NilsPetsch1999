@@ -26,10 +26,12 @@ spec:
       initContainers:
         - name: init-cache
           image: busybox
-          command: ["sh", "-c", "mkdir -p /var/cache/nginx/client_temp"]
+          command: ["sh", "-c", "mkdir -p /var/cache/nginx/client_temp && mkdir -p /var/run/nginx"]
           volumeMounts:
             - name: nginx-cache
               mountPath: /var/cache/nginx
+            - name: nginx-run
+              mountPath: /var/run
       containers:
         - name: nginx
           image: nginx:1.25
@@ -48,6 +50,10 @@ spec:
           volumeMounts:
             - name: nginx-cache
               mountPath: /var/cache/nginx
+            - name: nginx-run
+              mountPath: /var/run
       volumes:
         - name: nginx-cache
+          emptyDir: {}
+        - name: nginx-run
           emptyDir: {}
