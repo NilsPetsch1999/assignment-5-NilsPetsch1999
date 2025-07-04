@@ -42,6 +42,6 @@ spec:
           volumeMounts:
             - name: nginx-cache
               mountPath: /var/cache/nginx
-      volumes:
+      volumes:                     # <-- volumes must be inside the pod spec
         - name: nginx-cache
           emptyDir: {}
